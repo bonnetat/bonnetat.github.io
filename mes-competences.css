@@ -82,14 +82,3 @@ body {
     color: var(--color-text);
     font-weight: 500;
 }
-
-@media (max-width: 768px) {
-    .glow-container {
-        gap: 35px;
-        padding: 30px 15px;
-    }
-    .skill-card img {
-        width: 55px;
-        height: 55px;
-    }
-}
