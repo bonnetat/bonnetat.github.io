@@ -1,61 +1,192 @@
+/* ==========================================================
+   Page d'accueil — styles
+   (le HTML reste strictement identique)
+   ========================================================== */
+
 main {
-  color: var(--color-text-main);
-  .projets{
+  --accent: var(--color-text-main, #f2f2f2);
+  --muted: color-mix(in srgb, var(--accent) 78%, transparent);
+  --line: color-mix(in srgb, var(--accent) 18%, transparent);
+  --radius: 12px;
+  --ease: 0.35s ease;
+
+  color: var(--accent);
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 3vw, 48px) 80px;
+}
+
+/* ---------- Titres ---------- */
+
+main h1,
+main h2 {
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 16px;
+}
+
+main h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+}
+
+main h2 {
+  font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+}
+
+main .projets {
+  text-align: center;
+  margin: 24px 0 8px;
+}
+
+/* ---------- Texte ---------- */
+
+main p {
+  max-width: 62ch;
+  margin: 0 0 24px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- Sections (texte + image côte à côte) ---------- */
+
+main section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(32px, 4vw, 72px);
+  padding: clamp(48px, 6vw, 80px) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+main section:last-of-type {
+  border-bottom: none;
+}
+
+main section > div {
+  flex: 0 1 36%;
+  min-width: 0;
+}
+
+main section img {
+  flex: 1 1 60%;
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+
+main section img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Présentation (première section) ---------- */
+
+main section:first-child {
+  padding-top: clamp(56px, 8vw, 110px);
+  gap: clamp(32px, 6vw, 96px);
+}
+
+main section:first-child > div {
+  flex: 1 1 0;
+}
+
+main section:first-child > div p {
+  max-width: 68ch;
+}
+
+main section:first-child img {
+  flex: 0 0 auto;
+  width: 380px;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+/* ---------- Boutons ---------- */
+
+main a {
+  text-decoration: none;
+}
+
+main a button {
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color var(--ease), color var(--ease),
+    transform var(--ease);
+}
+
+main a button:hover {
+  background-color: var(--accent);
+  color: #000;
+}
+
+main a button:active {
+  transform: translateY(1px);
+}
+
+main a:focus-visible button,
+main a button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Tablette / mobile ---------- */
+
+@media (max-width: 900px) {
+  main section,
+  main section:first-child {
+    flex-direction: column;
     text-align: center;
-  }
-  a {
-    button {
-    background-color: black;
-    border: solid 2px var(--color-text-main);
-    text-decoration: none;
-    padding: 7px;
-    border-radius: 8px;
-    color: var(--color-text-main);
-  }
-    button:hover{
-      background-color: var(--color-text-main);
-      color: black;
-      border: solid 2px black;
-    }
-  }
-  section:first-child{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 100px 20px;
-    gap: 200px;
-    div p{
-      max-width: 1000px;
-    }
-    img {
-      width: 300px;
-      border-radius: 5%;
-    }
-    img:hover{
-      transform: scale(1.02);
-      transition: 0.9s ease;
-    }
+    gap: 32px;
   }
 
-
-  section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 100px 100px;
-    gap: 200px;
-    div p{
-      max-width: 1000px;
-      font-size:large;
-    }
-    img {
-      width: 800px;
-      border-radius: 8px;
-    }
-    img:hover{
-      transform: scale(1.2);
-      transition: 0.9s ease;
-    }
+  main section > div p {
+    margin-left: auto;
+    margin-right: auto;
   }
 
+  /* Image toujours au-dessus du texte une fois empilé */
+  main section > img:last-child {
+    order: -1;
+  }
+
+  main section > div {
+    flex: 0 0 auto;
+  }
+
+  main section img,
+  main section:first-child img {
+    flex: 0 0 auto;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  main section:first-child img {
+    width: 220px;
+  }
+}
+
+/* ---------- Accessibilité : réduire les animations ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  main section img,
+  main a button {
+    transition: none;
+  }
+
+  main section img:hover {
+    transform: none;
+  }
 }
